@@ -24,7 +24,7 @@ class File
     ~File();
 
     void readContent(void);
-    void findPattern(std::string string);
+    void findPattern(std::string pattern, bool listFiles, bool lineNumbers);
 
     std::string name;
     char * content;
@@ -62,7 +62,7 @@ void File::readContent(void)
   fclose(f);
 }
 
-void File::findPattern(std::string pattern)
+void File::findPattern(std::string pattern, bool listFiles, bool lineNumbers)
 {
   if(pattern == "")
   {
@@ -100,7 +100,20 @@ void File::findPattern(std::string pattern)
       if(j == stringLen - 1)
       {
         //the pattern matched!
-        std::cout << this->name << ":" << patch::to_string(line) << ":";
+        std::cout << this->name;
+
+        if(listFiles)
+        {
+          std::cout << "\n";
+          return;
+        }
+
+        if(lineNumbers)
+        {
+          std::cout << ":" << patch::to_string(line);
+        }
+
+        std::cout << ":";
 
         //print the line
         size_t k;

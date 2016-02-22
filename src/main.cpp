@@ -24,7 +24,17 @@ void * grepWorkerThread(void * arg);
 
 int main(int argc, char * argv[])
 {
-  std::string helpString = "Usage: fig [-i] [-l] [-n] [-t <file type>] [path] pattern\n";
+  std::string helpString = "\
+Usage:\n\
+\n\
+  fig [-i] [-l] [-n] [-t <file type>] [path] pattern\n\
+\n\
+where\n\
+  -i: Case insensitive\n\
+  -l: List files only\n\
+  -n: Print line number\n\
+  -t: File type\n\
+";
 
   if(argc < 2)
   {
@@ -48,14 +58,10 @@ int main(int argc, char * argv[])
         else if(argv[i][j] == 'l')
         {
           listFiles = true;
-          std::cout << "Not implemented yet\n";
-          return 0;
         }
         else if(argv[i][j] == 'n')
         {
           lineNumbers = true;
-          std::cout << "Not implemented yet\n";
-          return 0;
         }
         else if(argv[i][j] == 't')
         {
@@ -170,7 +176,7 @@ void * grepWorkerThread(void * arg)
   File * p_file;
   while((p_file = readerToGrepperQ->getFile()) != NULL)
   {
-    p_file->findPattern(pattern);
+    p_file->findPattern(pattern, listFiles, lineNumbers);
     delete p_file;
   }
 
