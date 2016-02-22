@@ -59,7 +59,29 @@ int main(int argc, char * argv[])
         }
         else if(argv[i][j] == 't')
         {
-          fileTypes.push_back(std::string(argv[++i]));
+          i++;
+          if(argv[i][0] == '[')
+          {
+            int k = 1;
+            char t;
+            char ft[2] = "x"; //dummy
+            while ((t = argv[i][k]) != ']')
+            {
+              if((t == ' ') || (t == '\0'))
+              {
+                std::cout << "Stray [\n";
+                return 0;
+              }
+
+              ft[0] = t;
+              fileTypes.push_back(std::string(ft));
+              k++;
+            }
+          }
+          else
+          {
+            fileTypes.push_back(std::string(argv[i]));
+          }
           break;
         }
         else
