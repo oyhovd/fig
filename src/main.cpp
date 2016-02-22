@@ -7,24 +7,80 @@
 #include "treeWalk.h"
 #include "fileQ.h"
 
-static char * pattern;
+static char * pattern = NULL;
+static char * path = NULL;
 static std::vector<std::string> fileTypes;
 static FileQ * treeToReaderQ;
 static FileQ * readerToGrepperQ;
 static pthread_t readWorker;
 static pthread_t grepWorker;
 
+static bool caseInsensitive = false;
+static bool listFiles = false;
+static bool lineNumbers = false;
+
 void * readWorkerThread(void * arg);
 void * grepWorkerThread(void * arg);
 
 int main(int argc, char * argv[])
 {
+  std::string helpString = "Usage: fig [-i] [-l] [-n] [-t <file type>] [path] pattern\n";
+
   if(argc < 2)
   {
-    std::cout << "Usage: fig <file endings> pattern\n";
+    std::cout << helpString;
     return 0;
   }
 
+  for(int i = 1; i < argc; i++)
+  {
+    if(argv[i][0] == '-')
+    {
+      int j = 1;
+      while(argv[i][j] != '\0')
+      {
+        if(argv[i][j] == 'i')
+        {
+          caseInsensitive = true;
+          std::cout << "Not implemented yet\n";
+          return 0;
+        }
+        else if(argv[i][j] == 'l')
+        {
+          listFiles = true;
+          std::cout << "Not implemented yet\n";
+          return 0;
+        }
+        else if(argv[i][j] == 'n')
+        {
+          lineNumbers = true;
+          std::cout << "Not implemented yet\n";
+          return 0;
+        }
+        else if(argv[i][j] == 't')
+        {
+          fileTypes.push_back(std::string(argv[++i]));
+          break;
+        }
+        else
+        {
+          std::cout << helpString;
+          return 0;
+        }
+
+        j++;
+      }
+    }
+    else
+    {
+      if(!path && pattern)
+      {
+        path = pattern;
+      }
+
+      pattern = argv[i];
+    }
+  }
   if(argc > 2)
   {
     //store file type pattern
@@ -35,8 +91,6 @@ int main(int argc, char * argv[])
 
   }
 
-  pattern = argv[argc-1];
-
   //Creating resources
   treeToReaderQ = new FileQ(10);
   readerToGrepperQ = new FileQ(10);
@@ -44,7 +98,15 @@ int main(int argc, char * argv[])
   pthread_create(&grepWorker, NULL, grepWorkerThread, NULL);
 
   //Parse tree
-  treeWalk("", ".");
+
+  if(!path)
+  {
+    treeWalk("", ".");
+  }
+  else
+  {
+    treeWalk("", path);
+  }
 
   //Wait for grepping to be done
   treeToReaderQ->close();

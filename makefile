@@ -13,5 +13,5 @@ fig : $(OBJS) $(INCS)
 
 .PHONY: clean
 clean:
-	\rm fig
+	rm fig
 
