@@ -6,7 +6,7 @@
 
 FileQ::FileQ(size_t _size, size_t _threadCount) : size(_size), threadCount(_threadCount)
 {
-  lock = PTHREAD_MUTEX_INITIALIZER;
+  lock = (pthread_mutex_t)PTHREAD_MUTEX_INITIALIZER;
   p_files = new File * [size];
   tail = 0;
   head = 0;

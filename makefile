@@ -5,7 +5,7 @@ OBJS = $(SRCS:.c=.o)
 CC = g++
 DEBUG = 
 LIBS = -lstdc++
-CXXFLAGS = -Ofast -Wall $(DEBUG) -Iinclude
+CXXFLAGS = -Ofast -Wall -Wno-deprecated-declarations $(DEBUG) -Iinclude
 LFLAGS = -Wall $(LIBS) $(DEBUG)
 
 fig : $(OBJS) $(INCS)
