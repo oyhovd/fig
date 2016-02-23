@@ -4,7 +4,7 @@
 #include "file.h"
 #include "fileQ.h"
 
-FileQ::FileQ(size_t _size) : size(_size)
+FileQ::FileQ(size_t _size, size_t _threadCount) : size(_size), threadCount(_threadCount)
 {
   lock = PTHREAD_MUTEX_INITIALIZER;
   p_files = new File * [size];
@@ -36,12 +36,15 @@ void FileQ::close(void)
 
   is_closing = true;
 
-  //give semaphore so getFile can move on and is_closing this madness
-  if (sem_post(&usedSlots) == -1)
+  //give semaphore to all threads so getFile can move on and this madness can be closed
+  while(threadCount--)
   {
-    //semaphore dead
-    perror("FATAL ERROR: Semaphore");
-    exit(-1);
+    if (sem_post(&usedSlots) == -1)
+    {
+      //semaphore dead
+      perror("FATAL ERROR: Semaphore");
+      exit(-1);
+    }
   }
 }
 

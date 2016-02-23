@@ -7,7 +7,7 @@
 class FileQ
 {
   public:
-    FileQ(size_t _size);
+    FileQ(size_t _size, size_t _threadCount);
     ~FileQ(void);
 
     void close(void);
@@ -17,11 +17,11 @@ class FileQ
   private:
     pthread_mutex_t lock;
     size_t size;
+    size_t threadCount;
     std::string name;
     File ** p_files;
     size_t tail; //get from tail
     size_t head; //add to head
-    size_t count;
     sem_t freeSlots;
     sem_t usedSlots;
     volatile bool is_closing;
