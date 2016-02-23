@@ -120,8 +120,8 @@ where\n\
   }
 
   //Creating resources
-  treeToReaderQ = new FileQ(10, 1);
-  readerToGrepperQ = new FileQ(10, 1);
+  treeToReaderQ = new FileQ(50, 1);
+  readerToGrepperQ = new FileQ(50, 1);
   pthread_create(&readWorker, NULL, readWorkerThread, NULL);
   pthread_create(&grepWorker, NULL, grepWorkerThread, NULL);
 
