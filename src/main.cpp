@@ -108,14 +108,6 @@ where\n\
 
       pattern = argv[i];
     }
-  }
-  if(argc > 2)
-  {
-    //store file type pattern
-    for(int i = 0; i < argc-2; i++)
-    {
-      fileTypes.push_back(std::string(argv[i+1]));
-    }
 
   }
 
