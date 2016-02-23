@@ -136,13 +136,15 @@ where\n\
     treeWalk("", path);
   }
 
-  //Wait for grepping to be done
+  //Wait for reading to be done
   treeToReaderQ->close();
+  pthread_join(readWorker, NULL);
+
+  //Wait for grepping to be done
   readerToGrepperQ->close();
+  pthread_join(grepWorker, NULL);
 
   //Clean up
-  pthread_join(readWorker, NULL);
-  pthread_join(grepWorker, NULL);
   delete treeToReaderQ;
   delete readerToGrepperQ;
 
