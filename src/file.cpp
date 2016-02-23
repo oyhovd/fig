@@ -1,3 +1,4 @@
+#include <iostream>
 #include "file.h"
 
 File::File(std::string _fileName) : name(_fileName)

@@ -2,7 +2,6 @@
 #define FILEQ_H
 
 #include <semaphore.h>
-#include <errno.h>
 #include "file.h"
 
 class FileQ

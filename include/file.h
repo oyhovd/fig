@@ -2,7 +2,6 @@
 #define FILE_H
 
 #include <cstdio>
-
 #include <sstream>
 
 //cygwin patch found somewhere on the internets

@@ -1,3 +1,7 @@
+#include <iostream>
+#include <algorithm>
+#include <errno.h>
+#include "file.h"
 #include "fileQ.h"
 
 FileQ::FileQ(size_t _size) : size(_size)
