@@ -1,7 +1,8 @@
 fig
 ===
 
-Own, much faster implementation (at least in cygwin) of find+grep. Multithreading.
+Grep (and find plus grep) is slow, especially in cygwin. This is a much faster, multithreading
+implementation.
 
 Usage:
 
