@@ -1,7 +1,7 @@
 fig
 ===
 
-Grep (and find plus grep) is slow, especially in cygwin. This is a much faster, multithreading
+Grep (and find plus grep) is slow in Cygwin. This is a much faster, multithreading
 implementation.
 
 Usage:
@@ -14,4 +14,7 @@ where
   -n: Print line number
   -t: File type
 
-Build with make.
+Build with make. Pre-compiled .exe for use in Cygwin can be found in the bin directory.
+
+Known issues:
+- Case insensitive search is not implemented yet.
